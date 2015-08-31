@@ -1,4 +1,5 @@
 // REQUIREMENTS //
+var db = require('./models');
 var express = require("express"),
     app = express(),
     path = require("path"),
@@ -13,14 +14,6 @@ app.use("/vendor", express.static("bower_components"));
 // body parser config to accept all datatypes
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// DATA //
-var foods =[
-  {_id: 0, name: "Sushiritto", yumminess: "quite"},
-  {_id: 1, name: "Green Eggs & Ham", yumminess: "sure"},
-  {_id: 2, name: "Crayfish", yumminess: "depending"},
-  {_id: 3, name: "Foie Gras", yumminess: "omg"},
-  {_id: 4, name: "Kale", yumminess: "meh"}
-];
 
 // ROUTES //
 app.get("/", function (req, res){
@@ -28,33 +21,39 @@ app.get("/", function (req, res){
   res.sendFile(path.join(views + 'index.html'));
 });
 
-// foods index path
-app.get("/foods", function (req, res){
-  // render foods index as JSON
-  res.send(foods);
+// cards index path
+app.get("/cards", function (req, res){    
+    db.Card.find({}, function(err, cards_list){
+      
+        if (err) {
+            console.log("BAD THING!");
+            return res.sendStatus(400);
+        }
+      res.send(cards_list);
+    })
 });
 
-app.post("/foods", function (req, res){
-  var newFood = req.body;
-  // add a unique id
-  newFood._id = foods[foods.length - 1]._id + 1;
-  // add new food to DB (array, really...)
-  foods.push(newFood);
-  // send a response with newly created object
-  res.send(newFood);
-});
+app.post("/cards", function (req, res){
+  var newCard = req.body;
+  db.Card.create(newCard, function(err, card){ 
+        if (err) {
+            console.log("BAD THING!");   
+        }
+     res.send(card);
+      })
+        
+    });
 
-app.delete("/foods/:id", function (req, res){
-  // set the value of the id
-  var targetId = parseInt(req.params.id, 10);
-  // find item in the array matching the id
-  var targetItem = _.findWhere(foods, {_id: targetId});
-  // get the index of the found item
-  var index = foods.indexOf(targetItem);
-  // remove the item at that index, only remove 1 item
-  foods.splice(index, 1);
-  // render deleted object
-  res.send(targetItem);
+app.delete("/cards/:id", function destroy(req, res){
+  var id = req.params.id;
+  db.Card.remove({_id: id}, function(err, food){
+    if (err) {
+      console.log(err);
+      return res.sendStatus(400);
+    }
+    res.sendStatus(200);
+  });
+
 });
 
 app.listen(3000, function (){

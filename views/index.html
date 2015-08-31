@@ -20,35 +20,55 @@
 <body>
   <div id="page-wrapper" class="container">
     <header class="page-header">
-      <h1>Bite Me <small>Om Noms!</small></h1>
+      <h1>Catch Phrase <small> Add Words and Definitions to Test Yourself</small></h1>
     </header>
-    <!-- form -->
-    <form class="form-inline" id="new-food-form">
-      <input name="name" type="text" class="form-control" id="food-name-input" placeholder="Name">
-      <input name="yumminess" type="text" class="form-control" id="food-yumminess-input" placeholder="Yumminess">
-      <button type="submit" class="btn btn-default">Add</button>
-    </form>
-    <ul class="list-group" id="food-ul">
-    </ul>
+
+<div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingTwo">
+      <h4 class="panel-title text-center">
+        <a class="collapsed " role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Add New Words and Definitions
+        </a>
+      </h4>
+    </div>
+    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+      <div class="panel-body text-center">
+         <form class="form-inline" id="new-card-form">
+          <input name="name" type="text" class="form-control" id="card-name-input" placeholder="Word">
+          <input name="description" class="form-control" type="text" id="card-description-input" placeholder="Definition">
+          <button type="submit" class="btn btn-default addButton" >Add</button>
+        </form>
+      </div>
+    </div>
   </div>
-  <script type="text/template" id="foods-template">
+    <!-- form -->
+    <div class="row text-center" >
+       <div class="col-md-12">
+          <div class="jumbotron">
+              <h1 class="list-group" id="card-ul"> </h1>
+                 <a class="btn btn-primary" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                    View Anaswer
+                  </a>
+                  
+                    <button class="btn btn-primary text-center" id="nextButton" type="button">
+                      Next 
+                    </button>
+                
+                  <div class="collapse" id="collapseExample">
+                    <div class="well" id= "answer">
+                      The answer is!! 
+                    </div>
+                  </div>
+              </div>
+           </div>
+        </div>  <!-- end of row div -->
+   
+  <script type="text/template" id="cards-template">
     <li class='list-group-item'><%= name %>
-      <!-- yuminess label -->
-      <span class="label label-default"><%= yumminess%></span>
-      <!-- button w/ registered onclick function -->
-      <button data-_id="<%= _id %>" onclick="deleteFood(this)" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    </li>
+    <button data-_id="<%= _id %>" onclick="deleteCard(this)" type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  </script>
+  <script type="text/template" id="answer-template">
+    <li class='list-group-item'><%= description %>  
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
