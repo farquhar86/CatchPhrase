@@ -3,9 +3,9 @@ var db = require('./models');
 
 var cards_list = [
 
-	{name: "code", description: "Rhymes with node"},
-	{name: "DOM", description: "Scary!!"},
-	{name: "KISS", description: "Tyes Please!!"}
+	{name: "These are", description: "This is a test answer"},
+	{name: "Test", description: "Be as detailed as you like"},
+	{name: "Cards", description: "Hope you learn lots"}
 	
 
 ]
